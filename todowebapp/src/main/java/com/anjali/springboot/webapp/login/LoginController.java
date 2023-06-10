@@ -1,4 +1,4 @@
-package com.anjali.springboot.todowebapp.login;
+package com.anjali.springboot.webapp.login;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
