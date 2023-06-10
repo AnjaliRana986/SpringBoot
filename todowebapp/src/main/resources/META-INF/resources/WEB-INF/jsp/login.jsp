@@ -4,6 +4,9 @@
      </head>
      <body>
         Welcome to Login Page!
+        <pre>
+            ${errorMesage}
+        </pre>
 <%--        when Request method is get -> all info is sent as part of url which is not secure. so use post--%>
         <form method="post">
             Name: <input type="text" name="name">
