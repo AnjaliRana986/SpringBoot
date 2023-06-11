@@ -18,7 +18,9 @@ public class TodoService {
         todos.add(new Todo(++todosCount,"anjali","Learn FullStack", LocalDate.now().plusYears(3),false));
     }
     public  List<Todo> findBtUsername(String username){
-        return todos;
+        Predicate<? super  Todo> predicate
+                = todo -> todo.getUsername().equalsIgnoreCase(username);
+        return todos.stream().filter(predicate).toList();
     }
     public  void addTodo(String username, String description, LocalDate targetDate, boolean done ){
         Todo todo = new Todo(++todosCount, username,description,targetDate,done);
