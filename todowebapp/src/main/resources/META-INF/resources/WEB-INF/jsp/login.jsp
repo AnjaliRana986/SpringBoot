@@ -3,7 +3,9 @@
          <title> My first HTML Page - JSP</title>
      </head>
      <body>
-        Welcome to Login Page!
+        <div class="container">
+
+        <h1>Login</h1>
         <pre>
             ${errorMesage}
         </pre>
@@ -13,6 +15,6 @@
             Password : <input type="password" name="password">
             <input type="submit">
         </form>
-
+        </div>
     </body>
 </html>
