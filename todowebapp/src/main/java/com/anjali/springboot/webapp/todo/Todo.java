@@ -1,5 +1,9 @@
 package com.anjali.springboot.webapp.todo;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
@@ -7,8 +11,14 @@ import java.time.LocalDate;
 //Database (MySQL)
 //create Static List of todos . after that use database(H2 first then , MySql)
 
+//JPA enable us to map
+//Bean -> table in Database
+@Entity
+//@Entity(name="TodoABC")  //map bean to table in database
 public class Todo {
+    public  Todo(){
 
+    }
 
     public Todo(int id, String username, String description, LocalDate targetDate, boolean done) {
         super();
@@ -18,7 +28,11 @@ public class Todo {
         this.targetDate = targetDate;
         this.done = done;
     }
+    @Id
+    @GeneratedValue
     private int id;
+
+//    @Column(name = "name")
     private String username;
     @Size(min=10, message = "Enter at least 10 characters")
     private String description;

@@ -2,12 +2,16 @@ package com.anjali.springboot.webapp.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 
+import java.security.Security;
 import java.util.function.Function;
 
 @Configuration
@@ -19,19 +23,46 @@ public class SpringSecurityConfiguration {
 
     @Bean
     public  InMemoryUserDetailsManager createUserDetailsManager() {
+
+        UserDetails userDetail1 = createNewUser("anjali", "dummy");
+        UserDetails userDetail2 = createNewUser("saurabh", "dummy123");
+//        UserDetails userDetail = createNewUser("anjali", "dummy");
+        return  new InMemoryUserDetailsManager(userDetail1, userDetail2);
+    }
+
+    private UserDetails createNewUser(String username, String password) {
         Function<String, String> passwordEncoder
                 = input -> passwordEncoder().encode(input);
         UserDetails userDetail = User.builder()
                                 .passwordEncoder(passwordEncoder)
-                                .username("anjali")
-                                .password("dummy")
+                                .username(username)
+                                .password(password)
                                 .roles("USER", "ADMIN")
                                 .build();
-        return  new InMemoryUserDetailsManager(userDetail);
+        return userDetail;
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    //by default
+    // all urls are protected
+    //A login form is shown for unauthorized requests
+    //CSRF disable
+    //Frames
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+        http.authorizeHttpRequests(
+                auth -> auth.anyRequest().authenticated());
+        http.formLogin(Customizer.withDefaults());
+
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
+
+        return http.build();
+
     }
 }
