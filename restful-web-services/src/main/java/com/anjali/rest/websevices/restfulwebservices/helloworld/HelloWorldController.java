@@ -1,10 +1,7 @@
 package com.anjali.rest.websevices.restfulwebservices.helloworld;
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 //this controller will EXPOSE A REST API
 //will give a specific url to the rest api
@@ -24,6 +21,15 @@ public class HelloWorldController {
     //task 2
     @GetMapping( path ="/hello-world-bean")
     public HelloWorldBean helloWorldBean(){
+
         return new HelloWorldBean("Hello World");
+    }
+
+    //Path Parameters ( is the variable in the url)
+    // and to be able to capture the value fo path parameters we will use @PathVariable annotation
+    @GetMapping( path ="/hello-world/path-variable/{name}")   //{} indicates that name is a variable
+    public HelloWorldBean helloWorldPathVariable(@PathVariable String name){
+
+        return new HelloWorldBean(String.format("Hello World, %s",name));
     }
 }
