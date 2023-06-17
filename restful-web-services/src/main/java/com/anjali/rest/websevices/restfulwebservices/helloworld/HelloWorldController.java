@@ -1,7 +1,11 @@
 package com.anjali.rest.websevices.restfulwebservices.helloworld;
 
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Locale;
 
 //this controller will EXPOSE A REST API
 //will give a specific url to the rest api
@@ -13,6 +17,10 @@ public class HelloWorldController {
     //"Hello -world
 //    @RequestMapping(method = RequestMethod.GET, path ="/hello-world" )
     // A better way to do this mapping
+    private MessageSource messageSource;
+    public HelloWorldController(MessageSource messageSource){
+        this.messageSource = messageSource;
+    }
     @GetMapping( path ="/hello-world")
     public String helloWorld(){
         return "Hello World";
@@ -31,5 +39,12 @@ public class HelloWorldController {
     public HelloWorldBean helloWorldPathVariable(@PathVariable String name){
 
         return new HelloWorldBean(String.format("Hello World, %s",name));
+    }
+
+    @GetMapping( path ="/hello-world-internationalized")
+    public String helloWorldInternationalized(){
+        Locale locale = LocaleContextHolder.getLocale();
+        return messageSource.getMessage("good.morning.message",null,"Default Message",locale);
+//        return "Hello World";
     }
 }
