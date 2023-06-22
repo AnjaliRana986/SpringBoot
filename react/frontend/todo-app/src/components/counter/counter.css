@@ -17,6 +17,16 @@
     border-radius:30px;
     border-color: black;
 }
+.resetButton{
+    font-size:30px;
+    background-color: purple;
+    width:100px;
+    margin: 10px;
+    color:white;
+    padding:15px;
+    border-radius:30px;
+    border-color: black;
+}
 
 .counterButton2{
     font-size:30px;

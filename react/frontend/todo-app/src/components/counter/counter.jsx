@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import {PropTypes} from 'prop-types'
 import './counter.css'
+import CounterButton from './counterButton'
+
 
 export default function Counter(){
     const [count, setCount] = useState(0);
@@ -11,7 +12,9 @@ export default function Counter(){
     function decremmentCouterParentFunction(by){
         setCount(count - by)
     }
-
+    function resetCounter(){
+        setCount(0)
+    }
 
     
     return(
@@ -20,47 +23,10 @@ export default function Counter(){
             <CounterButton by={1} incremmentMethod={incremmentCouterParentFunction} decrementMethod={decremmentCouterParentFunction}/>
             <CounterButton by={2} incremmentMethod={incremmentCouterParentFunction} decrementMethod={decremmentCouterParentFunction}/>
             <CounterButton by={3} incremmentMethod={incremmentCouterParentFunction} decrementMethod={decremmentCouterParentFunction}/>
+            <button className="resetButton"
+                    onClick={resetCounter}                
+                > Reset </button>
         </>
     )
 
-}
-function CounterButton({by,incremmentMethod,decrementMethod}) {
-    const [count, setCount] = useState(0);
-
-    
-    function incrementCounterFunction(){
-        setCount(count + by)
-        incremmentMethod(by);
-    }
-    function decrementCounterFunction(){
-        setCount(count - by)
-        decrementMethod(by);
-    }
-    return (
-        <div className="Counter">
-            
-            <div>
-
-            <button className="counterButton"
-                    onClick={incrementCounterFunction}                
-                
-                >+{by}</button>
-            
-           
-            <button className="counterButton2"
-                    onClick={decrementCounterFunction}                
-                
-                >-{by}</button>
-                
-            </div>
-        </div>
-    )
-}
-
-CounterButton.propTypes = {
-    by: PropTypes.number
-}
-
-CounterButton.defaultProps = {
-    by: 5
 }
