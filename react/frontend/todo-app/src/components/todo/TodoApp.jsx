@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './TodoApp.css'
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useNavigate, useParams} from 'react-router-dom'
 export default function TodoApp(){
     return(
         <div className="TodoApp">
@@ -8,8 +8,9 @@ export default function TodoApp(){
             <Routes>
                 <Route path = '/' element ={<LoginComponent />}></Route>
                 <Route path = '/login' element ={<LoginComponent />}></Route>
-                <Route path = '/welcome' element ={<WelcomeComponent />}></Route>
+                <Route path = '/welcome/:username' element ={<WelcomeComponent />}></Route>
                 <Route path = '*' element={<ErrorComponent/>}></Route>
+                <Route path = '/listtodos' element={<ListTodosComponent></ListTodosComponent>}></Route>
             </Routes>
             </BrowserRouter>
             
@@ -36,7 +37,7 @@ function LoginComponent() {
             console.log('Success');
             setShowSuccessMessage(true)
             setShowErrorMessage(false)
-            navigate('/welcome')
+            navigate(`/welcome/${username}`)
         }
         else{
             console.log('failed');
@@ -60,6 +61,7 @@ function LoginComponent() {
         }
         return null
     }
+    
     return(
         <div className="Login">
             <h1>Time to Login!</h1>
@@ -85,9 +87,11 @@ function LoginComponent() {
 
 
 function WelcomeComponent() {
+    const {username}  = useParams()
+    console.log(username)
     return(
         <div className="WelcomeComponent">
-            <h1>Welcome!</h1>
+            <h1>Welcome! {username}</h1>
              Welcome Component
         </div>
     )
@@ -101,4 +105,40 @@ function ErrorComponent() {
             </div>
         </div>
     )
+}
+function ListTodosComponent() {
+const todos = [
+    {id:1, description :'Learn AWS'},
+    {id:2, description :'Learn DevOps'},
+    {id:3, description :'Learn Full Stack'},
+    {id:4, description :'Learn Azure'}
+]
+return (
+    <div className="ErrorComponent">
+        <h1>Things You Want To Do!</h1>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <td>id</td>
+                        <td>description</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        todos.map(
+                            todo => (
+                                <tr key = {todo.id}>
+                                   <td>{todo.id}</td>
+                                   <td>{todo.description}</td>
+                                </tr>
+                            )
+                        )
+                    }
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+)
 }
